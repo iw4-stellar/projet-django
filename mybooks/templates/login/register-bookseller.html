@@ -1,1 +1,9 @@
 <h1>Register as a Bookseller</h1>
+
+<form action="/register/bookseller" method="POST">
+  {% csrf_token %}
+
+  {{ form }}
+
+  <button type="submit">Register</button>
+</form>
