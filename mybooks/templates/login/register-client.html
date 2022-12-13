@@ -1,1 +1,9 @@
-<h1>Register as a Client</h1>
+<h1>Register as a client</h1>
+
+<form action="/register/client" method="POST">
+  {% csrf_token %}
+
+  {{ form }}
+
+  <button type="submit">Register</button>
+</form>

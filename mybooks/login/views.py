@@ -1,20 +1,43 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User, Group
+from .forms import ClientRegistrationForm
 # Create your views here.
 
 def loginView(request):
-  template = loader.get_template('login/login.html')
   context = {}
-  return HttpResponse(template.render(context, request))
+  return HttpResponse(render(request, 'login/login.html', context))
 
 def registerBooksellerView(request):
-  template = loader.get_template('login/register-bookseller.html')
   context = {}
-  return HttpResponse(template.render(context, request))
+  return HttpResponse(render(request, 'login/register-bookseller.html', context))
 
 def registerClientView(request):
-  template = loader.get_template('login/register-client.html')
-  context = {}
-  return HttpResponse(template.render(context, request))
+  if request.method == 'POST':
+    form = ClientRegistrationForm(request.POST)
+    if form.is_valid():
+      email = form.cleaned_data['email']
+      password = form.cleaned_data['password']
+
+      # Create user with email & password
+      user = User.objects.create_user(
+        username=email,
+        email=email,
+        password=password,
+      )
+
+      # Add user to clients group
+      client_group, _ = Group.objects.get_or_create(name='client')
+      user.groups.add(client_group)
+
+      # Save changes
+      user.save()
+
+    return HttpResponseRedirect('/')
+
+  form = ClientRegistrationForm()
+
+  context = {
+    'form': form,
+  }
+  return HttpResponse(render(request, 'login/register-client.html', context))
