@@ -1,9 +1,19 @@
+{% extends 'base_default.html' %}
+
+{% block main %}
 <h1>Register as a Bookseller</h1>
 
 <form action="/register/bookseller" method="POST">
   {% csrf_token %}
 
+  {% if error %}
+    <p>
+      {{ error }}
+    </p>
+  {% endif %}
+
   {{ form }}
 
   <button type="submit">Register</button>
 </form>
+{% endblock %}

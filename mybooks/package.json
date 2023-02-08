@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "start":           "python manage.py runserver",
+    "createsuperuser": "python manage.py createsuperuser",
+    "shell":           "python manage.py shell"
+  }
+}
