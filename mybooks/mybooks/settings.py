@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "reading_groups",
     # DEBUG
     "debug_toolbar",
+    "books",
 ]
 
 MIDDLEWARE = [
