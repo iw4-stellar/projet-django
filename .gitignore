@@ -21,3 +21,7 @@ env/
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
+
+# MacOS #
+.DS_Store
+mybooks/.DS_Store
