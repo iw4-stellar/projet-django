@@ -1,0 +1,18 @@
+{% extends 'base_default.html' %}
+
+{% block main %}
+<h1>
+  Reading groups
+</h1>
+
+{% for rg in reading_groups %}
+<div class="reading-group">
+  <h6>
+    <a href="{% url 'reading_groups:detail' id=rg.id %}">
+      {{ rg.title }}
+    </a>
+  </h6>
+  <p>{{ rg.capacity }}</p>
+</div>
+{% endfor %}
+{% endblock %}

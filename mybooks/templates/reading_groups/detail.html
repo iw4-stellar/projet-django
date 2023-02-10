@@ -1,0 +1,14 @@
+{% extends 'base_default.html' %}
+
+{% block main %}
+<h1>
+  Reading group
+</h1>
+
+{% if rg %}
+<div class="reading-group">
+  <h6>{{ rg.title }}</h6>
+  <p>{{ rg.capacity }}</p>
+</div>
+{% endif %}
+{% endblock %}

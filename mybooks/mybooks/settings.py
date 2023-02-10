@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users",
+    "reading_groups",
+    # DEBUG
     "debug_toolbar",
 ]
 
@@ -134,3 +136,7 @@ AUTH_USER_MODEL = "users.User"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# Authentication
+
+LOGIN_URL = '/login'

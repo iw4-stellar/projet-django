@@ -34,6 +34,7 @@ def loginView(request):
                         username=db_user.username,
                         password=password,
                     )
+                    
                     if user is not None:
                         login(request, user)
                         return redirect("/")

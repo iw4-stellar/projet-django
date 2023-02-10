@@ -34,7 +34,7 @@ def registerBooksellerView(request):
                 if email_exists:
                     raise Exception("Email address already in use")
 
-                user = Bookseller.objects.create(
+                user = Bookseller.objects.create_user(
                     username=username,
                     email=email,
                     password=password,
@@ -87,7 +87,7 @@ def registerClientView(request):
                 if email_exists:
                     raise Exception("Email address already in use")
 
-                user = Client.objects.create(
+                user = Client.objects.create_user(
                     username=username,
                     email=email,
                     password=password,
