@@ -46,9 +46,7 @@ def registerBooksellerView(request):
             except Exception as e:
                 error = e.args[0]
                 context["error"] = error
-            finally:
                 return render(request, template, context)
-
         else:
             context["error"] = "Invalid input. Try again!"
             return render(request, template, context)
@@ -99,7 +97,6 @@ def registerClientView(request):
             except Exception as e:
                 error = e.args[0]
                 context["error"] = error
-            finally:
                 return render(request, template, context)
 
         else:
