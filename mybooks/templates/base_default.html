@@ -49,6 +49,14 @@
             Reading groups
           </a>
         </li>
+        {% if user.is_authenticated %}
+        <li>
+          <a href="/loans">
+            <i data-feather="book"></i>
+            My loans
+          </a>
+        </li>
+        {% endif %}
         {% if user.is_authenticated and user.is_bookseller %}
         <li>
           <a href="/bookseller/inventory">

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from users.models import User
 from client.models import Client
+from loan.models import Inventory
 from bookseller.models import Bookseller
 from .forms import BooksellerRegistrationForm, ClientRegistrationForm
 
@@ -35,6 +36,8 @@ def registerBooksellerView(request):
                 user=user,
                 name=name,
             )
+
+            inventory = Inventory.objects.create(bookseller=bookseller)
 
             login(request, user)
 

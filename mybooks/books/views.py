@@ -1,4 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from client.decorators import clients_only
+from bookseller.models import Bookseller
+from loan.models import InventoryItem, Loan
 from .forms import BookForm
 from .models import Book
 
@@ -22,8 +26,11 @@ def bookView(request, id):
 
     book = Book.objects.filter(id=id).first()
 
+    bookItems = InventoryItem.objects.filter(book=book, quantity__gt=0)
+
     context = {
         "book": book,
+        "bookItems": bookItems,
     }
 
     return render(request, template, context)
@@ -38,3 +45,17 @@ def add_book(request):
     else:
         form = BookForm()
     return render(request, "books/add_book.html", {"form": form})
+
+
+@login_required
+@clients_only
+def loanView(request, inventory_item_id):
+    client = request.client
+    item = InventoryItem.objects.filter(id=inventory_item_id).first()
+
+    loan = Loan.objects.create(
+        client=client,
+        item=item,
+    )
+
+    return render("/client")
