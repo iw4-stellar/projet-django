@@ -1,0 +1,43 @@
+{% extends 'base_bookseller.html' %}
+
+{% block main %}
+
+<h1>My inventory</h1>
+
+<div class="py-2 border-y">
+    <a href="/bookseller/inventory/add" class="btn btn-primary">
+        <i data-feather="plus"></i>
+        Add item
+    </a>
+</div>
+
+<div class="invetory">
+    <table class="table w-full">
+        <!-- head -->
+        <thead>
+            <tr>
+                <th></th>
+                <th>Book</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- row 1 -->
+            {% for item in items %}
+            <tr>
+                <th>{{ forloop.counter }}</th>
+                <td>{{ item.book.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td class="flex items-center gap-4">
+                    <a href="{% url 'bookseller:inventory-delete' id=item.id %}">
+                        <i data-feather="trash-2"></i>
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

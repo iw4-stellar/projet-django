@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "client",
     "reading_groups",
     "books",
+    "loan",
     # DEBUG
     "debug_toolbar",
 ]

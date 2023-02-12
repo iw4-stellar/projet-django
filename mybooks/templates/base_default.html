@@ -49,6 +49,16 @@
             Reading groups
           </a>
         </li>
+        {% if user.is_authenticated and user.is_bookseller %}
+        <li>
+          <a href="/bookseller/inventory">
+            <i data-feather="database"></i>
+            My inventory
+          </a>
+        </li>
+        {% endif %}
+        {% block menu %}
+        {% endblock %}
       </ul>
     </div>
   </header>
