@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
-from users.models import User, Bookseller
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .decorators import booksellers_only
 
 
 # Create your views here.
+@login_required
+@booksellers_only
 def indexView(request):
-    if not request.user.is_authenticated and request.user.role != Bookseller.base_role:
-        return redirect("/login")
-
     template = "bookseller/index.html"
     return render(request, template)

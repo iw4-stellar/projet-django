@@ -1,1 +1,8 @@
-<h1>Client Index</h1>
+{% extends 'base_client.html' %}
+
+{% block main %}
+<span class="uppercase tracking-widest text-xs">Client</span>
+<h1>
+    Hello {{ request.client.name }}!
+</h1>
+{% endblock %}

@@ -1,1 +1,8 @@
-<h1>Bookseller index</h1>
+{% extends 'base_client.html' %}
+
+{% block main %}
+<span class="uppercase tracking-widest text-xs">Bookseller</span>
+<h1>
+    Hello {{ request.bookseller.name }}!
+</h1>
+{% endblock %}

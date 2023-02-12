@@ -1,13 +1,15 @@
 from django.db import models
-from users.models import Bookseller, Client
+from bookseller.models import Bookseller
 
 # Create your models here.
 
 
 class ReadingGroup(models.Model):
+    bookseller = models.ForeignKey(Bookseller, on_delete=models.CASCADE)
+
     title = models.CharField(max_length=256)
     capacity = models.IntegerField()
-    bookseller = models.ForeignKey(Bookseller, on_delete=models.CASCADE)
+    description = models.CharField(max_length=4096)
 
     def __str__(self):
         return self.title

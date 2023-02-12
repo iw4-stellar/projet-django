@@ -1,33 +1,57 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="bumblebee">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock %}</title>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+  <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio,line-clamp"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    tailwind.config = {};
+  </script>
 </head>
 
 <body>
-    <header>
-        <h1>Projet Django</h1>
-        <a href="/">mybooks</a>
-        <a href="/reading-groups">Reading groups</a>
+  <header class="border-b shadow">
+    <div class="navbar border-b px-4 navbar bg-neutral text-neutral-content flex-col md:flex-row md:justify-between">
+      <div>
+        <a class="font-bold text-xl" href="/">mybooks</a>
+      </div>
+      <div>
+        <ul class="menu menu-horizontal flex-col items-center md:flex-row">
+          {% if user.is_authenticated %}
+          <li><a href="/logout" class="btn btn-ghost text-error">Logout</a></li>
+          {% else %}
+          <li><a href="/login" class="btn btn-ghost">Sign in</a></li>
+          <li><a href="/register/client" class="btn btn-ghost text-primary">Sign up</a></li>
+          <li><a href="/register/bookseller" class="btn btn-ghost text-primary">Register your bookstore</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="navbar">
+      <ul class="menu menu-horizontal w-full flex-col items-center md:flex-row">
+        <li>
+          <a href="/reading-groups">
+            <i data-feather="users"></i>
+            Reading groups
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
 
-        {% if user.is_authenticated %}
-        {{ user.username }}
-        <a href="/logout">Log out</a>
-        {% else %}
-        <a href="/register/client">Register</a>
-        <a href="/register/bookseller">Register as a Bookseller</a>
-        <a href="/login">Sign in</a>
-        {% endif %}
-    </header>
+  <main class="prose p-8 mx-auto">{% block main %} {% endblock %}</main>
 
-    <main>
-        {% block main %}
-        {% endblock %}
-    </main>
+  <script>
+    feather.replace()
+  </script>
 </body>
 
 </html>

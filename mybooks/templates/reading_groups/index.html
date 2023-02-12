@@ -5,14 +5,37 @@
   Reading groups
 </h1>
 
-{% for rg in reading_groups %}
-<div class="reading-group">
-  <h6>
-    <a href="{% url 'reading_groups:detail' id=rg.id %}">
-      {{ rg.title }}
-    </a>
-  </h6>
-  <p>{{ rg.capacity }}</p>
+<div class="py-2 border-y">
+  {% if user.is_bookseller %}
+  <a href="/reading-groups/create" class="btn btn-primary gap-2">
+    <i data-feather="plus"></i>
+    Create
+  </a>
+  {% endif %}
 </div>
-{% endfor %}
+
+<div class="filters py-2 border-b">
+  <span>Filter by:</span>
+</div>
+
+<div class="reading-groups py-4 grid grid-cols-1 gap-4">
+  {% for rg in reading_groups %}
+  <div class="reading-group card border shadow card-compact not-prose">
+    <a href="{% url 'reading_groups:detail' id=rg.id %}" class="no-underline">
+      <div class="card-body">
+        <h6 class="card-title">
+          {{ rg.title }}
+        </h6>
+        <p>{{ rg.bookseller.name }}</p>
+
+
+        <div class="flex gap-2 items-center">
+          <i data-feather="users"></i>
+          <p>{{ rg.capacity }}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

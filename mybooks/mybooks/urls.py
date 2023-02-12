@@ -24,5 +24,5 @@ urlpatterns = [
     path("bookseller/", include("bookseller.urls")),
     path("reading-groups/", include("reading_groups.urls")),
     path("admin/", admin.site.urls),
-    path("__debug__/", include("debug_toolbar.urls")),
+    # path("__debug__/", include("debug_toolbar.urls")),
 ]

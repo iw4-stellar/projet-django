@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "start":           "python manage.py runserver",
+    "start": "python manage.py runserver",
     "createsuperuser": "python manage.py createsuperuser",
-    "shell":           "python manage.py shell"
+    "shell": "python manage.py shell",
+    "clearcache": "find . -name __pycache__ -type d -exec rm -rf {} +"
   }
 }

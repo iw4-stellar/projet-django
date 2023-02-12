@@ -12,6 +12,7 @@ def logoutView(request):
 
 def loginView(request):
     template = "login/login.html"
+    next_url = request.GET.get("next", "/")
 
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -34,10 +35,19 @@ def loginView(request):
                         username=db_user.username,
                         password=password,
                     )
-                    
+
                     if user is not None:
                         login(request, user)
-                        return redirect("/")
+
+                        print(user.is_client())
+
+                        if user.is_client():
+                            next_url = "/client"
+
+                        if user.is_bookseller():
+                            next_url = "/bookseller"
+
+                        return redirect(next_url)
                     else:
                         raise User.DoesNotExist()
                 else:
@@ -49,6 +59,10 @@ def loginView(request):
         else:
             context["error"] = "Invalid input. Try again!"
             return render(request, template, context)
+
+    if request.user.is_authenticated:
+        return redirect("/")
+
     form = LoginForm()
     context = {
         "form": form,

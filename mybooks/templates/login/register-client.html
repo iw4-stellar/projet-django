@@ -3,17 +3,32 @@
 {% block main %}
 <h1>Register as a client</h1>
 
-<form action="/register/client" method="POST">
+<form action="/register/client" method="POST" class="mb-8">
   {% csrf_token %}
 
-  {% if error %}
-    <p>
-      {{ error }}
-    </p>
-  {% endif %}
+  {% for field in form %}
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">{{ field.label }}</span>
+    </label>
 
-  {{ form }}
+    {{ field }}
 
-  <button type="submit">Register</button>
+    <label class="label">
+      <span class="label-text-alt text-error font-bold">{{ field.errors.as_text }}</span>
+    </label>
+  </div>
+  {% endfor %}
+
+  <div class="form-control mt-8">
+    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+  </div>
 </form>
+
+<div class="text-center">
+  <a href="/login" class="link link-hover">
+    I already have an account
+  </a>
+</div>
+
 {% endblock %}

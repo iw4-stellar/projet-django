@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from users.models import Client, Bookseller
+from users.models import User
+from client.models import Client
+from bookseller.models import Bookseller
 from .forms import BooksellerRegistrationForm, ClientRegistrationForm
 
 
@@ -17,45 +19,34 @@ def registerBooksellerView(request):
         }
 
         if form.is_valid():
-            username = form.cleaned_data["username"]
-            email = form.cleaned_data["email"]
-            password = form.cleaned_data["password"]
-            confirm_password = form.cleaned_data["confirm_password"]
+            username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
+            name = form.cleaned_data.get("name", "").strip()
 
-            try:
-                if password != confirm_password:
-                    raise Exception("Passwords don't match")
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                user_type=User.Type.BOOKSELLER,
+            )
 
-                username_exists = Bookseller.objects.filter(username=username).exists()
-                if username_exists:
-                    raise Exception("Username already in use")
+            bookseller = Bookseller.objects.create(
+                user=user,
+                name=name,
+            )
 
-                email_exists = Bookseller.objects.filter(email=email).exists()
-                if email_exists:
-                    raise Exception("Email address already in use")
+            login(request, user)
 
-                user = Bookseller.objects.create_user(
-                    username=username,
-                    email=email,
-                    password=password,
-                )
-
-                login(request, user)
-
-                return redirect("/")
-            except Exception as e:
-                error = e.args[0]
-                context["error"] = error
-                return render(request, template, context)
+            return redirect("/bookseller")
         else:
-            context["error"] = "Invalid input. Try again!"
             return render(request, template, context)
-
-    form = BooksellerRegistrationForm()
-    context = {
-        "form": form,
-    }
-    return render(request, template, context)
+    else:
+        form = BooksellerRegistrationForm()
+        context = {
+            "form": form,
+        }
+        return render(request, template, context)
 
 
 def registerClientView(request):
@@ -68,43 +59,31 @@ def registerClientView(request):
         }
 
         if form.is_valid():
-            username = form.cleaned_data["username"]
-            email = form.cleaned_data["email"]
-            password = form.cleaned_data["password"]
-            confirm_password = form.cleaned_data["confirm_password"]
+            username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
+            name = form.cleaned_data.get("name", "").strip()
 
-            try:
-                if password != confirm_password:
-                    raise Exception("Passwords don't match")
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                user_type=User.Type.CLIENT,
+            )
 
-                username_exists = Client.objects.filter(username=username).exists()
-                if username_exists:
-                    raise Exception("Username already in use")
+            client = Client.objects.create(
+                user=user,
+                name=name,
+            )
 
-                email_exists = Client.objects.filter(email=email).exists()
-                if email_exists:
-                    raise Exception("Email address already in use")
+            login(request, user)
 
-                user = Client.objects.create_user(
-                    username=username,
-                    email=email,
-                    password=password,
-                )
-
-                login(request, user)
-
-                return redirect("/")
-            except Exception as e:
-                error = e.args[0]
-                context["error"] = error
-                return render(request, template, context)
-
+            return redirect("/client")
         else:
-            context["error"] = "Invalid input. Try again!"
             return render(request, template, context)
-
-    form = ClientRegistrationForm()
-    context = {
-        "form": form,
-    }
-    return render(request, template, context)
+    else:
+        form = ClientRegistrationForm()
+        context = {
+            "form": form,
+        }
+        return render(request, template, context)

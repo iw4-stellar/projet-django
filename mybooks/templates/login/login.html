@@ -7,11 +7,24 @@
   {% csrf_token %}
 
   {% if error %}
-  <p>{{ error }}</p>
+  <div class="text-error flex gap-4 items-center">
+    <i data-feather="x"></i>
+    <p class="font-bold">{{ error }}</p>
+  </div>
   {% endif %}
 
-  {{ form }}
+  {% for field in form %}
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">{{ field.label }}</span>
+    </label>
 
-  <button type="submit">Sign in</button>
+    {{ field }}
+  </div>
+  {% endfor %}
+
+  <div class="form-control mt-8">
+    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+  </div>
 </form>
 {% endblock %}

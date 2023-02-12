@@ -2,15 +2,29 @@
 
 {% block main %}
 <h1>
-  Create a Reading groups
+  Create a Reading group
 </h1>
 
 <form action="/reading-groups/create/" method="POST">
   {% csrf_token %}
 
-  {{ form }}
+  {% for field in form %}
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">{{ field.label }}</span>
+    </label>
 
-  <button type="submit">Create</button>
+    {{ field }}
+
+    <label class="label">
+      <span class="label-text-alt text-error font-bold">{{ field.errors.as_text }}</span>
+    </label>
+  </div>
+  {% endfor %}
+
+  <div class="form-control mt-8">
+    <button type="submit" class="btn btn-primary btn-block">Create</button>
+  </div>
 </form>
 
 {% endblock %}
