@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     "bookseller",
     "client",
     "reading_groups",
+    "books",
     # DEBUG
-    # "debug_toolbar",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
