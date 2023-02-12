@@ -25,3 +25,6 @@ env/
 # MacOS #
 .DS_Store
 mybooks/.DS_Store
+
+# cover uploads
+mybooks/book_covers

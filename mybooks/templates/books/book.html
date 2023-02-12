@@ -1,0 +1,25 @@
+{% extends 'base_default.html' %}
+
+{% block main %}
+
+<a href="/books" class="btn btn-ghost mb-4">
+    <i data-feather="arrow-left"></i>
+    Back
+</a>
+
+{% if book %}
+<div class="book flex items-start gap-4">
+    <img src="/{{ book.cover }}" class="my-0 h-36" alt="">
+    <div class="flex-1">
+        <h6 class="card-title">
+            {{ book.title }}
+        </h6>
+        <p>by {{ book.author.name }}, {{ book.publisher.name }}</p>
+        <div>
+            <div class="badge badge-outline">{{ book.collection.name }}</div>
+            <div class="badge badge-outline">{{ book.genre }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base_client.html' %}
+{% load static %}
+
+{% block main %}
+<h1>Books</h1>
+
+{% if user.is_bookseller %}
+<a href="/books/add_book" class="btn btn-primary">
+    <i data-feather="plus"></i>
+    Add book
+</a>
+{% endif %}
+
+
+<div class="books py-4 grid grid-cols-1 gap-4">
+    {% for book in books %}
+    <div class="book card card-side border shadow card-compact not-prose">
+        <figure>
+            <img src="/{{ book.cover }}" class="h-36" alt="">
+        </figure>
+        <a href="{% url 'books:book' id=book.id %}" class="no-underline">
+            <div class="card-body">
+                <h6 class="card-title">
+                    {{ book.title }}
+                </h6>
+                <p>{{ book.author.name }}</p>
+        </a>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}
